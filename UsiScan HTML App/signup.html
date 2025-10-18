@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - UsiScan</title>
+  <style>
+    :root {
+      --bg: #51bbb3;
+      --accent: #0f2749;
+      --text: #ffffff;
+      --font: "Poppins", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      background-color: #eaf6f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font);
+    }
+
+    .phone {
+      background-color: var(--bg);
+      color: var(--text);
+      width: min(420px, 95vw);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 50px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .welcome-gif {
+      width: 120px;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      position: relative;
+    }
+
+    .error-message {
+      position: absolute;
+      top: -30px;
+      left: 8%;
+      width: 85%;
+      text-align: left;
+      font-size: 14px;
+      color: #ffefef;
+      background-color: rgba(255, 30, 30, 0.7);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .input-container {
+      position: relative;
+      width: 85%;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      border: none;
+      border-radius: 40px;
+      outline: none;
+      font-size: 16px;
+      font-family: var(--font);
+      color: #333;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .btn {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px 0;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      width: 85%;
+      border-radius: 40px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      margin-top: 6px;
+    }
+
+    .btn:hover {
+      background-color: #0d203f;
+      transform: scale(1.03);
+    }
+
+    .signup-line {
+      font-size: 15px;
+      color: white;
+      margin-top: 12px;
+      opacity: 0.9;
+    }
+
+    .signup-line a {
+      color: #0f2749;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .signup-line a:hover {
+      color: #ffffff;
+    }
+
+    .success-msg {
+      position: absolute;
+      bottom: 25%;
+      background-color: #0f2749;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .show-success {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 28px; }
+      .welcome-gif { width: 100px; }
+      .btn { width: 85%; font-size: 16px; }
+      .form-input { font-size: 15px; height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="top-section">
+      <img src="signup.gif" alt="Signup Animation" class="welcome-gif" />
+      <h1>Create Account</h1>
+    </div>
+
+    <div class="form-section">
+      <div class="error-message" id="errorMsg"></div>
+
+      <div class="input-container">
+        <input type="text" id="username" placeholder="Username" class="form-input" />
+      </div>
+
+      <div class="input-container">
+        <input type="email" id="email" placeholder="Email Address" class="form-input" />
+      </div>
+
+      <div class="input-container">
+        <input type="password" id="password" placeholder="Password" class="form-input" />
+      </div>
+
+      <div class="input-container">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" class="form-input" />
+      </div>
+
+      <button class="btn" onclick="signUp()">Sign Up</button>
+
+      <div class="signup-line">
+        Already have an account? <a href="login.html">Login</a>
+      </div>
+    </div>
+
+    <div class="success-msg" id="successMsg">✅ Account created!</div>
+  </div>
+
+  <script>
+    // Show error message
+    function showError(message) {
+      const error = document.getElementById("errorMsg");
+      error.textContent = message;
+      error.style.display = "block";
+      setTimeout(() => (error.style.display = "none"), 3000);
+    }
+
+    // ✅ Correct Email Validation (fixed regex)
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    // ✅ Sign Up Function
+    function signUp() {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!username || !email || !password || !confirmPassword) {
+        showError("⚠️ Please fill in all fields.");
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        showError("⚠️ Please enter a valid email address.");
+        return;
+      }
+
+      if (password.length < 6) {
+        showError("⚠️ Password must be at least 6 characters.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError("⚠️ Passwords do not match.");
+        return;
+      }
+
+      // Retrieve existing users from localStorage
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Check if email already exists
+      const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (existingUser) {
+        showError("⚠️ Email already registered.");
+        return;
+      }
+
+      // Store new user
+      users.push({ username, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      // Show success message
+      const msg = document.getElementById("successMsg");
+      msg.classList.add("show-success");
+
+      setTimeout(() => {
+        msg.classList.remove("show-success");
+        window.location.href = "login.html";
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
