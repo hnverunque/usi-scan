@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UsiScan Shorts</title>
+  <style>
+    :root {
+      --bg:#eaf6f4;
+      --card:#ffffff;
+      --accent:#3fc1b9;
+      --muted:#9aa6ad;
+      --deep:#0f2b3a;
+      --soft:#f5f8f9;
+      --pill:#eef6f5;
+      --radius:18px;
+      --ui-width:min(420px,98vw);
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:Inter,system-ui,'Segoe UI',Roboto,Arial;
+      background:linear-gradient(180deg,var(--bg),#fbffff);
+      color:var(--deep);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .phone{
+      width:var(--ui-width);
+      height:100vh;
+      background:#fff;
+      box-shadow:0 18px 40px rgba(8,20,30,0.12);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+    }
+
+    .sticky-header {
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:#fff;
+      height:230px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:18px;
+      color:var(--deep);
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .screen{padding:20px;overflow:auto;flex:1 1 auto;}
+
+    .shorts-feed{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .short-card{
+      width:100%;
+      aspect-ratio:9/16;
+      background:#d2f0f0;
+      border-radius:18px;
+      overflow:hidden;
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+      padding:12px;
+      color:white;
+      font-weight:600;
+      font-size:16px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .short-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+      border-radius:18px;
+    }
+
+    .short-card span{
+      position:relative;
+      z-index:1;
+    }
+
+    /* Vertical action bar */
+    .action-bar {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .action-item {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .action-item:hover {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .action-item.profile {
+      padding: 2px;
+      background: none;
+    }
+
+    .action-item.profile img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid white;
+      object-fit: cover;
+    }
+
+    .bottom-nav{
+      height:84px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 18px;
+      background:linear-gradient(180deg,rgba(235,247,245,0.9),rgba(240,252,252,0.95));
+      border-top:1px solid rgba(10,30,40,0.03);
+      position:sticky;
+      bottom:0;
+      flex-shrink:0;
+    }
+    .nav-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .nav-item{
+      flex:1;
+      text-align:center;
+      padding:8px 6px;
+      font-size:12px;
+      color:var(--muted);
+      cursor:pointer;
+      transition:color 0.3s, transform 0.2s;
+    }
+    .nav-item svg{
+      display:block;
+      margin:0 auto 4px;
+      width:22px;
+      height:22px;
+      stroke:var(--muted);
+      transition:stroke 0.3s;
+    }
+    .nav-item.active{color:var(--accent);font-weight:600;}
+    .nav-item.active svg{stroke:var(--accent);}
+    .nav-item:hover{transform:scale(1.05);color:var(--accent);}
+    .nav-item:hover svg{stroke:var(--accent);}
+
+    .fab{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      background:var(--accent);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:absolute;
+      top:-32px;
+      left:50%;
+      transform:translateX(-50%);
+      box-shadow:0 12px 26px rgba(63,193,185,0.24);
+      border:6px solid white;
+      cursor:pointer;
+    }
+    .fab svg{width:30px;height:30px;}
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="sticky-header">Shorts</div>
+
+    <main class="screen">
+      <section class="shorts-feed">
+        <div class="short-card" style="background-image:url('short1.jpg')">
+          <span>Herbal Remedy Tips</span>
+          <div class="action-bar">
+            <div class="action-item profile" title="Poster"><img src="poster1.jpg" alt="Poster"/></div>
+            <div class="action-item" title="Like">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Comments">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Share">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="More">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="12" r="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="short-card" style="background-image:url('short2.jpg')">
+          <span>Quick Barcode Scan Trick</span>
+          <div class="action-bar">
+            <div class="action-item profile"><img src="poster2.jpg" alt="Poster"/></div>
+            <div class="action-item" title="Like">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Comments">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Share">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="More">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="12" r="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="short-card" style="background-image:url('short3.jpg')">
+          <span>Top 5 Wellness Products</span>
+          <div class="action-bar">
+            <div class="action-item profile"><img src="poster3.jpg" alt="Poster"/></div>
+            <div class="action-item" title="Like">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Comments">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Share">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="18" cy="5" r="3"/>
+                <circle cx="6" cy="12" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+            </div>
+            <div class="action-item" title="Favorite">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div class="action-item" title="More">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="12" r="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <div class="nav-row">
+        <div class="nav-item" onclick="setActive(this); goTo('index.html')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V12H9v8a2 2 0 0 1-2 2H3z"/></svg>
+          Home
+        </div>
+        <div class="nav-item active" onclick="setActive(this); goTo('shorts.html')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Shorts
+        </div>
+        <div style="width:84px"></div>
+        <div class="nav-item" onclick="setActive(this); goTo('history.html')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5H1"/></svg>
+          History
+        </div>
+        <div class="nav-item" onclick="setActive(this); goTo('profile.html')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </div>
+      </div>
+
+      <button class="fab" onclick="goTo('camera.html')" aria-label="Open camera">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3l2-3h8l2 3h3a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="3"/></svg>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    function goTo(page){
+      window.location.href = page;
+    }
+
+    function setActive(selected){
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+      selected.classList.add('active');
+    }
+  </script>
+</body>
+</html>

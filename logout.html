@@ -1,0 +1,100 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging Out - UsiScan</title>
+  <style>
+    :root {
+      --bg: #51bbb3;
+      --accent: #0f2749;
+      --text: #ffffff;
+      --font: "Poppins", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #3fc1b9, #eaf6f4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font);
+      overflow: hidden;
+    }
+
+    .phone {
+      width: min(420px, 95vw);
+      height: 100vh;
+      background-color: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 60px 24px;
+      position: relative;
+      border-radius: 0; /* changed to pure corners */
+    }
+
+
+    /* GIF container matches GIF intrinsic aspect ratio */
+    .gif-container {
+      width: 100%;
+      max-width: 250px; /* adjust to GIF size */
+      aspect-ratio: 1 / 1; /* keep square if GIF is square */
+      animation: bounce 1s ease-in-out infinite alternate;
+    }
+
+    .gif-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* fills the container fully */
+      border-radius: 12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    @keyframes bounce {
+      0%   { transform: translateY(0) scale(1); }
+      50%  { transform: translateY(-20px) scale(1.05); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .message {
+      margin-top: 24px;
+      font-size: 18px;
+      color: var(--text);
+      font-weight: 600;
+      opacity: 0;
+      animation: fadeIn 3.5s forwards 0.5s;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @media (max-width: 480px) {
+      .gif-container { max-width: 150px; }
+      .message { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="gif-container">
+      <img src="signup.gif" alt="Logging Out...">
+    </div>
+    <div class="message">Logging out...</div>
+  </div>
+
+  <script>
+    // Clear session data
+    localStorage.removeItem("currentUser");
+
+    // Redirect after 5 seconds
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 4000);
+  </script>
+</body>
+</html>
